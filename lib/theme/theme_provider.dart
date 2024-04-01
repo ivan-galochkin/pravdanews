@@ -1,7 +1,7 @@
-import 'package:pravda_news/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:pravda_news/theme/app_theme.dart';
 
-class ThemeProvider extends ChangeNotifier {
+class ThemeNotifier extends ChangeNotifier {
   ThemeData? currentTheme = AppTheme.lightTheme();
 
   void setLightMode() {

@@ -5,6 +5,13 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
+        cardTheme: CardTheme(
+            color: Colors.black,
+            surfaceTintColor: Colors.black,
+            shadowColor: Colors.transparent,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            elevation: 0),
         fontFamily: textFontFamily,
         progressIndicatorTheme:
             const ProgressIndicatorThemeData(color: Colors.red),
@@ -13,6 +20,8 @@ class AppTheme {
             background: Colors.black,
             primaryContainer: Colors.transparent),
         textTheme: const TextTheme(
+            titleSmall: TextStyle(
+                fontFamily: 'Times', fontSize: 12, fontWeight: FontWeight.w700),
             bodyLarge: TextStyle(
                 fontFamily: 'Soviet-large',
                 fontWeight: FontWeight.w700,
@@ -60,6 +69,13 @@ class AppTheme {
   static ThemeData lightTheme() {
     return ThemeData(
         fontFamily: textFontFamily,
+        cardTheme: CardTheme(
+            color: Colors.white,
+            surfaceTintColor: Colors.white,
+            shadowColor: Colors.transparent,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            elevation: 0),
         progressIndicatorTheme:
             const ProgressIndicatorThemeData(color: Colors.red),
         colorScheme: const ColorScheme.light(
@@ -67,6 +83,8 @@ class AppTheme {
             background: Colors.white,
             primaryContainer: Colors.transparent),
         textTheme: const TextTheme(
+            titleSmall: TextStyle(
+                fontFamily: 'Times', fontSize: 12, fontWeight: FontWeight.w700),
             bodyLarge: TextStyle(
                 fontFamily: 'Soviet-large',
                 fontWeight: FontWeight.w700,
