@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pravda_news/domain/logger/logger.dart';
 import 'package:pravda_news/presentation/app_root.dart';
-
-import 'logger/logger.dart';
 
 void main() {
   initLogger();

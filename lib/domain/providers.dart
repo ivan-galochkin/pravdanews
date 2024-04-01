@@ -4,8 +4,8 @@ import 'package:pravda_news/data/source/local/sqlite_storage.dart';
 import 'package:pravda_news/data/source/network/api.dart';
 import 'package:pravda_news/domain/repository/favnews_repository.dart';
 import 'package:pravda_news/domain/utils/utils.dart';
+import 'package:pravda_news/presentation/theme/theme_provider.dart';
 
-import '../theme/theme_provider.dart';
 import 'entity/fav_news.dart';
 
 final apiProvider = Provider<Api>((ref) => ApiImpl(http.Client()));

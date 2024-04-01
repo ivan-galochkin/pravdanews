@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:pravda_news/data/dto/news_dto.dart';
-import 'package:pravda_news/logger/logger.dart';
+import 'package:pravda_news/domain/logger/logger.dart';
 
 abstract class Api {
   Future<List<NewsDto>> extendOldNews(int page, Future<List<NewsDto>> oldNews);
