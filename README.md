@@ -1,3 +1,4 @@
+[![Flutter-delivery](https://github.com/ivan-galochkin/pravdanews/actions/workflows/flutter-ci.yml/badge.svg?branch=main)](https://github.com/ivan-galochkin/pravdanews/actions/workflows/flutter-ci.yml)
 # PravdaNews
 
 ##### Что если бы Советский Союз не распался и советский народ окунулся в бескрайние просторы интернета? 
