@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pravda_news/data/dto/news_dto.dart';
 import 'package:pravda_news/domain/providers.dart';
-
-import 'news_page.dart';
+import 'package:pravda_news/presentation/animation/animations.dart';
 
 class NewsBlock extends ConsumerStatefulWidget {
   final NewsDto newsDto;
@@ -40,9 +39,7 @@ class NewsBlockState extends ConsumerState<NewsBlock> {
         splashColor: Colors.redAccent.withOpacity(0.2),
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return NewsPage(newsDto: widget.newsDto);
-          }));
+          Navigator.push(context, createRouteOpenNews(widget.newsDto));
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -54,45 +51,48 @@ class NewsBlockState extends ConsumerState<NewsBlock> {
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: widget.newsDto.imageUrl == 'NoImage'
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset('assets/img.png',
-                                fit: BoxFit.cover, height: 200))
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.network(
-                              widget.newsDto.imageUrl,
-                              fit: BoxFit.cover,
-                              height: 200,
-                              errorBuilder: (context, exception, stackTrace) {
-                                return Image.asset('assets/img.png',
-                                    fit: BoxFit.cover, height: 200);
-                              },
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return SizedBox(
-                                    width: 300,
-                                    height: 200,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    ));
-                              },
-                            ),
-                          ))),
+                child: Hero(
+                    tag: widget.newsDto.id,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: widget.newsDto.imageUrl == 'NoImage'
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.asset('assets/img.png',
+                                    fit: BoxFit.cover, height: 200))
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(
+                                  widget.newsDto.imageUrl,
+                                  fit: BoxFit.cover,
+                                  height: 200,
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset('assets/img.png',
+                                        fit: BoxFit.cover, height: 200);
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return SizedBox(
+                                        width: 300,
+                                        height: 200,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              )))),
             const SizedBox(
               height: 5,
             ),

@@ -4,6 +4,7 @@ import 'package:pravda_news/domain/entity/fav_news.dart';
 import 'package:pravda_news/presentation/favnews_block.dart';
 
 import '../domain/providers.dart';
+import 'animation/animated_theme_button.dart';
 
 class FavNewsLine extends ConsumerStatefulWidget {
   const FavNewsLine({super.key});
@@ -36,8 +37,8 @@ class FavNewsLineState extends ConsumerState<FavNewsLine> {
                 'PravdaNews',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              IconButton(
-                  onPressed: () {
+              AnimationRotateWrapper(
+                  callback: () {
                     setState(() {
                       _isDark = !_isDark;
                     }); // change the variable
@@ -46,10 +47,15 @@ class FavNewsLineState extends ConsumerState<FavNewsLine> {
                         ? ref.read(themeProvider).setDarkMode()
                         : ref.read(themeProvider).setLightMode();
                   },
-                  icon: const ImageIcon(
-                    AssetImage('assets/star.png'),
-                    size: 38,
-                  )),
+                  child: ImageIcon(
+                    color: Theme.of(context)
+                        .iconButtonTheme
+                        .style
+                        ?.foregroundColor
+                        ?.resolve({MaterialState.pressed}),
+                    const AssetImage('assets/star.png'),
+                    size: 35,
+                  ))
             ])),
         body: Scrollbar(
           child: FutureBuilder(

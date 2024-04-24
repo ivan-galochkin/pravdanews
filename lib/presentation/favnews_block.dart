@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pravda_news/domain/providers.dart';
 
 import '../domain/entity/fav_news.dart';
-import 'news_page.dart';
+import 'animation/animations.dart';
 
 class FavNewsBlock extends ConsumerStatefulWidget {
   final FavNews favNews;
@@ -24,9 +24,8 @@ class FavNewsBlockState extends ConsumerState<FavNewsBlock> {
           splashColor: Colors.redAccent.withOpacity(0.2),
           borderRadius: BorderRadius.circular(20),
           onTap: () => {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return NewsPage(newsDto: widget.favNews.toNewsDto());
-            }))
+            Navigator.push(
+                context, createRouteOpenNews(widget.favNews.toNewsDto()))
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

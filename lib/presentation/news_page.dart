@@ -4,6 +4,7 @@ import 'package:pravda_news/data/dto/news_dto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/providers.dart';
+import 'animation/animated_theme_button.dart';
 
 class NewsPage extends ConsumerStatefulWidget {
   final NewsDto newsDto;
@@ -49,38 +50,41 @@ class NewsPageState extends ConsumerState<NewsPage> {
                       ),
                       Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.network(
-                              widget.newsDto.imageUrl,
-                              fit: BoxFit.cover,
-                              height: 250,
-                              errorBuilder: (context, exception, stackTrace) {
-                                return Image.asset('assets/img.png',
-                                    fit: BoxFit.cover, height: 200);
-                              },
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return SizedBox(
-                                    width: size.width,
-                                    height: 300,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    ));
-                              },
-                            ),
-                          )),
+                          child: Hero(
+                              tag: widget.newsDto.id,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(
+                                  widget.newsDto.imageUrl,
+                                  fit: BoxFit.cover,
+                                  height: 250,
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset('assets/img.png',
+                                        fit: BoxFit.cover, height: 200);
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return SizedBox(
+                                        width: size.width,
+                                        height: 300,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ))),
                       Padding(
                           padding: const EdgeInsets.only(top: 5, bottom: 10),
                           child: Text(widget.newsDto.description,
@@ -110,8 +114,8 @@ class NewsPageState extends ConsumerState<NewsPage> {
           title: Row(mainAxisSize: MainAxisSize.min, children: [
             Text('Trust, but verify',
                 style: Theme.of(context).textTheme.headlineLarge),
-            IconButton(
-                onPressed: () {
+            AnimationRotateWrapper(
+                callback: () {
                   setState(() {
                     _isDark = !_isDark;
                   }); // change the variable
@@ -120,10 +124,15 @@ class NewsPageState extends ConsumerState<NewsPage> {
                       ? ref.read(themeProvider).setDarkMode()
                       : ref.read(themeProvider).setLightMode();
                 },
-                icon: const ImageIcon(
-                  AssetImage('assets/star.png'),
-                  size: 38,
-                )),
+                child: ImageIcon(
+                  color: Theme.of(context)
+                      .iconButtonTheme
+                      .style
+                      ?.foregroundColor
+                      ?.resolve({MaterialState.pressed}),
+                  const AssetImage('assets/star.png'),
+                  size: 35,
+                ))
           ])),
     );
   }
